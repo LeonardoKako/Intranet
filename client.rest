@@ -1,13 +1,13 @@
 @baseurl = http://localhost:3000/users
-@id = 422e7f8c-24bc-4367-8406-4b6fc254afc7
+@idUser = 422e7f8c-24bc-4367-8406-4b6fc254afc7
 
-### Persons findAll() 
+### Users findAll() 
 GET {{baseurl}}/
 
-### Persons findOne() 
-GET {{baseurl}}/{{id}}
+### Users findOne() 
+GET {{baseurl}}/{{idUser}}
 
-### Persons Post() 
+### Users Post() 
 POST {{baseurl}} 
 Content-Type: application/json
 
@@ -18,8 +18,8 @@ Content-Type: application/json
     "password": "senha123"
 }
 
-### Persons Patch(id) 
-PATCH {{baseurl}}/{{id}}
+### Users Patch(idUser) 
+PATCH {{baseurl}}/{{idUser}}
 Content-Type: application/json
 
 {
@@ -29,5 +29,5 @@ Content-Type: application/json
     "password": "senha123 att"  
 }
 
-### Persons Remove(id) 
-DELETE {{baseurl}}/{{id}}
+### Users Remove(idUser) 
+DELETE {{baseurl}}/{{idUser}}
