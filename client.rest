@@ -1,0 +1,33 @@
+@baseurl = http://localhost:3000/users
+@id = 422e7f8c-24bc-4367-8406-4b6fc254afc7
+
+### Persons findAll() 
+GET {{baseurl}}/
+
+### Persons findOne() 
+GET {{baseurl}}/{{id}}
+
+### Persons Post() 
+POST {{baseurl}} 
+Content-Type: application/json
+
+{
+    "fullName": "Leonardo João Fleith", 
+    "nickname": "Leo",
+    "email": "kako@gmail.com", 
+    "password": "senha123"
+}
+
+### Persons Patch(id) 
+PATCH {{baseurl}}/{{id}}
+Content-Type: application/json
+
+{
+    "fullName": "Leonardo João Fleith att", 
+    "nickname": "Leo att",
+    "email": "novokako@gmail.com", 
+    "password": "senha123 att"  
+}
+
+### Persons Remove(id) 
+DELETE {{baseurl}}/{{id}}
