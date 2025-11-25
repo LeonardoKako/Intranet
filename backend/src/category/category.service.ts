@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +17,23 @@ export class CategoryService {
   ) {}
 
   async create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+    try {
+      const categoryData = {
+        name: createCategoryDto.name,
+        description: createCategoryDto.description,
+      };
+
+      const newCategory = this.categoryRepository.create(categoryData);
+      await this.categoryRepository.save(newCategory);
+      return { ...newCategory, status: 'Adicionado' };
+    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (e.code === '23505') {
+        throw new ConflictException('Categoria já cadastrado');
+      }
+
+      throw e;
+    }
   }
 
   async findAll() {
@@ -23,13 +43,33 @@ export class CategoryService {
   async findOne(id: string) {
     const category = await this.categoryRepository.findOneBy({ id });
     if (!category) throw new NotFoundException('Categoria não encontrada');
+    return category;
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+    const categoryData = {
+      name: updateCategoryDto?.name,
+      description: updateCategoryDto?.description,
+    };
+
+    const categoryModified = {
+      id,
+      ...categoryData,
+    };
+
+    if (!categoryModified) {
+      throw new NotFoundException('Categoria não encontrada');
+    }
+
+    await this.categoryRepository.save(categoryModified);
+
+    return { ...categoryModified, status: 'Atualizado' };
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} category`;
+    const category = await this.categoryRepository.findOneBy({ id });
+    if (!category) throw new NotFoundException('Categoria não encontrada');
+
+    return this.categoryRepository.remove(category);
   }
 }

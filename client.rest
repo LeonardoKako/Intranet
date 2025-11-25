@@ -1,14 +1,14 @@
-@baseurl = http://localhost:3000/users
-@idUser = 422e7f8c-24bc-4367-8406-4b6fc254afc7
+@baseurl = http://localhost:3000
+@idUser = 0a491952-1f0f-4a6f-a8ef-5b5f339310eb
 
 ### Users findAll() 
-GET {{baseurl}}/
+GET {{baseurl}}/users
 
 ### Users findOne() 
-GET {{baseurl}}/{{idUser}}
+GET {{baseurl}}/users/{{idUser}}
 
 ### Users Post() 
-POST {{baseurl}} 
+POST {{baseurl}}/users
 Content-Type: application/json
 
 {
@@ -19,15 +19,45 @@ Content-Type: application/json
 }
 
 ### Users Patch(idUser) 
-PATCH {{baseurl}}/{{idUser}}
+PATCH {{baseurl}}/users/{{idUser}}
 Content-Type: application/json
 
 {
     "fullName": "Leonardo João Fleith att", 
-    "nickname": "Leo att",
-    "email": "novokako@gmail.com", 
+
     "password": "senha123 att"  
 }
 
 ### Users Remove(idUser) 
-DELETE {{baseurl}}/{{idUser}}
+DELETE {{baseurl}}/users/{{idUser}}
+
+####################################################################
+
+@idCategory = f90fa45a-0775-4c36-a339-91683ef0124b
+
+### Category findAll() 
+GET {{baseurl}}/category
+
+### Category findOne() 
+GET {{baseurl}}/category/{{idCategory}}
+
+### Category Post() 
+POST {{baseurl}}/category
+Content-Type: application/json
+
+{
+    "name": "Login", 
+    "description": "Logins de acesso"
+}
+
+### Category Patch(idUser) 
+PATCH {{baseurl}}/category/{{idCategory}}
+Content-Type: application/json
+
+{
+    "name": "Login 2", 
+    "description": "Logins de acesso 2"
+}
+
+### Category Remove(idUser) 
+DELETE {{baseurl}}/category/{{idCategory}}
