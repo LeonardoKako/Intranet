@@ -1,5 +1,5 @@
 @baseurl = http://localhost:3000
-@idUser = 0a491952-1f0f-4a6f-a8ef-5b5f339310eb
+@idUser = b7eca887-e651-41fe-bc00-18369030f642
 
 ### Users findAll() 
 GET {{baseurl}}/users
@@ -14,8 +14,8 @@ Content-Type: application/json
 {
     "fullName": "Leonardo João Fleith", 
     "nickname": "Leo",
-    "email": "kako@gmail.com", 
-    "password": "senha123"
+    "email": "apoio03.ti@unicesusc.edu.br", 
+    "password": "senhaLeo"
 }
 
 ### Users Patch(idUser) 
@@ -24,7 +24,6 @@ Content-Type: application/json
 
 {
     "fullName": "Leonardo João Fleith att", 
-
     "password": "senha123 att"  
 }
 
