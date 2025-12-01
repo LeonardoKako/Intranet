@@ -1,5 +1,4 @@
 import { CircleUserRoundIcon, HouseIcon, SquarePenIcon } from "lucide-react";
-import { categories } from "../utils/examples";
 
 type Props = {
   user: {

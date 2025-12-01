@@ -46,7 +46,8 @@ Content-Type: application/json
 
 {
     "name": "Login", 
-    "description": "Logins de acesso"
+    "description": "Logins de acesso",
+    "icon": "KeyRoundIcon"
 }
 
 ### Category Patch(idCategory) 
