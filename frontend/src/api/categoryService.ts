@@ -1,5 +1,5 @@
-import type { CreateCategoryDto, UpdateCategoryDto } from "../dto/category.dto";
 import { api } from "./api";
+import type { CreateCategoryDto, UpdateCategoryDto } from "./dto/category.dto";
 
 export const categoryService = {
   getAll: async () => {

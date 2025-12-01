@@ -1,5 +1,5 @@
-import type { CreateUserDto, UpdateUserDto } from "../dto/user.dto";
 import { api } from "./api";
+import type { CreateUserDto, UpdateUserDto } from "./dto/user.dto";
 
 export const usersService = {
   getAll: async () => {
