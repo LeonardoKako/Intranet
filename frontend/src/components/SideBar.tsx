@@ -1,19 +1,23 @@
-import {
-  CircleUserRoundIcon,
-  HouseIcon,
-  KeyRoundIcon,
-  SquarePenIcon,
-} from "lucide-react";
+import { CircleUserRoundIcon, HouseIcon, SquarePenIcon } from "lucide-react";
+import { categories } from "../utils/examples";
 
-export function SideBar() {
+type Props = {
+  user: {
+    nickname: string;
+  };
+};
+
+export function SideBar({ user }: Props) {
   return (
-    <aside className='w-72 min-h-[89.8vh] bg-gray-100 p-6 flex flex-col text-black rounded'>
+    <aside className='min-w-72 min-h-[89.8vh] bg-gray-100 p-6 flex flex-col text-black rounded'>
       <div className='mt-4 flex items-center gap-4'>
         <CircleUserRoundIcon size={56} />
         <div className='flex flex-col items-start justify-end'>
-          <h2>Leo</h2>
+          <h2>{user.nickname}</h2>
           <div className='flex items-center justify-center gap-2 cursor-pointer hover:text-rose-600 transition'>
-            <h3 className='text-sm'>Visualizar perfil</h3>
+            <a href='#' className='text-sm'>
+              Visualizar perfil
+            </a>
             <SquarePenIcon size={14} className='mt-[2.5px]' />
           </div>
         </div>
@@ -28,13 +32,15 @@ export function SideBar() {
             <HouseIcon size={20} />
             <a href='#'>Home</a>
           </li>
-          <li
-            className='flex items-center gap-2 p-2 py-4 rounded 
+          {categories.map((category) => (
+            <li
+              className='flex items-center gap-2 p-2 py-4 rounded 
           hover:bg-rose-400 hover:text-gray-100 cursor-pointer transition'
-          >
-            <KeyRoundIcon size={20} />
-            <a href='#'>Logins</a>
-          </li>
+            >
+              <category.icon size={20} />
+              <a href='#'>{category.name}</a>
+            </li>
+          ))}
         </ul>
       </nav>
     </aside>
