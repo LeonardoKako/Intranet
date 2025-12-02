@@ -1,4 +1,13 @@
-import { CircleUserRoundIcon, HouseIcon, SquarePenIcon } from "lucide-react";
+import {
+  CircleUserRoundIcon,
+  FolderIcon,
+  HouseIcon,
+  SquarePenIcon,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { categoryService } from "../api/categoryService";
+import type { Category } from "../types/types";
+import { CATEGORY_ICON_MAP } from "../utils/categoryIconMap";
 
 type Props = {
   user: {
@@ -7,6 +16,22 @@ type Props = {
 };
 
 export function SideBar({ user }: Props) {
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    async function loadAll() {
+      try {
+        const [c] = await Promise.all([categoryService.getAll()]);
+
+        setCategories(c);
+        console.log(c);
+      } catch (err) {
+        console.error("Erro ao carregar dados:", err);
+      }
+    }
+
+    loadAll();
+  }, []);
+
   return (
     <aside className='min-w-72 min-h-[89.8vh] bg-gray-100 p-6 flex flex-col text-black rounded'>
       <div className='mt-4 flex items-center gap-4'>
@@ -31,15 +56,19 @@ export function SideBar({ user }: Props) {
             <HouseIcon size={20} />
             <a href='#'>Home</a>
           </li>
-          {categories.map((category) => (
-            <li
-              className='flex items-center gap-2 p-2 py-4 rounded 
-          hover:bg-rose-400 hover:text-gray-100 cursor-pointer transition'
-            >
-              <category.icon size={20} />
-              <a href='#'>{category.name}</a>
-            </li>
-          ))}
+          {categories.map((category: Category) => {
+            const Icon = CATEGORY_ICON_MAP[category.icon] ?? FolderIcon; // fallback
+
+            return (
+              <li
+                key={category.id}
+                className='flex items-center gap-2 p-2 py-4 rounded hover:bg-rose-400 hover:text-gray-100 cursor-pointer transition'
+              >
+                <Icon size={20} />
+                <span>{category.name}</span>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </aside>
