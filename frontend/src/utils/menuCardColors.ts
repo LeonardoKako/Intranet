@@ -20,39 +20,48 @@ export const COLOR_MAP: Record<
   {
     wave1: string;
     wave2: string;
+    wave3: string;
   }
 > = {
   orange: {
     wave1: `${base1} from-orange-300 to-orange-500`,
     wave2: `${base2} from-orange-400 to-orange-600`,
+    wave3: "text-orange-400",
   },
   blue: {
     wave1: `${base1} from-blue-300 to-blue-500`,
     wave2: `${base2} from-blue-400 to-blue-600`,
+    wave3: "text-blue-400",
   },
   teal: {
     wave1: `${base1} from-teal-300 to-teal-500`,
     wave2: `${base2} from-teal-400 to-teal-600`,
+    wave3: "text-teal-400",
   },
   red: {
     wave1: `${base1} from-red-300 to-red-500`,
     wave2: `${base2} from-red-400 to-red-600`,
+    wave3: "text-red-400",
   },
   green: {
     wave1: `${base1} from-green-300 to-green-500`,
     wave2: `${base2} from-green-400 to-green-600`,
+    wave3: "text-green-400",
   },
   purple: {
     wave1: `${base1} from-purple-300 to-purple-500`,
     wave2: `${base2} from-purple-400 to-purple-600`,
+    wave3: "text-purple-400",
   },
   pink: {
     wave1: `${base1} from-pink-300 to-pink-500`,
     wave2: `${base2} from-pink-400 to-pink-600`,
+    wave3: "text-pink-400",
   },
   yellow: {
     wave1: `${base1} from-yellow-300 to-yellow-500`,
     wave2: `${base2} from-yellow-400 to-yellow-600`,
+    wave3: "text-yellow-400",
   },
 };
 

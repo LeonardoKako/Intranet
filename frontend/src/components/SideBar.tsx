@@ -8,6 +8,10 @@ import { useEffect, useState } from "react";
 import { categoryService } from "../api/categoryService";
 import type { Category } from "../types/types";
 import { CATEGORY_ICON_MAP } from "../utils/categoryIconMap";
+import {
+  CATEGORY_COLOR_MAP,
+  SIDEBAR_COLOR_CLASSES,
+} from "../utils/categoryMapColor";
 
 type Props = {
   user: {
@@ -16,14 +20,13 @@ type Props = {
 };
 
 export function SideBar({ user }: Props) {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
   useEffect(() => {
     async function loadAll() {
       try {
         const [c] = await Promise.all([categoryService.getAll()]);
-
         setCategories(c);
-        console.log(c);
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
       }
@@ -46,23 +49,29 @@ export function SideBar({ user }: Props) {
           </div>
         </div>
       </div>
+
       <div className='bg-gray-400 mx-auto w-[80%] h-0.5 my-6 rounded'></div>
+
       <nav>
-        <ul className='flex flex-col gap-1 '>
-          <li
-            className='flex items-center gap-2 p-2 py-4 rounded 
-          hover:bg-rose-400 hover:text-gray-100 cursor-pointer transition'
-          >
+        <ul className='flex flex-col gap-1'>
+          <li className='flex items-center gap-2 p-2 py-4 rounded hover:bg-rose-400 hover:text-gray-100 cursor-pointer transition'>
             <HouseIcon size={20} />
             <a href='#'>Home</a>
           </li>
-          {categories.map((category: Category) => {
-            const Icon = CATEGORY_ICON_MAP[category.icon] ?? FolderIcon; // fallback
+
+          {categories.map((category) => {
+            const Icon = CATEGORY_ICON_MAP[category.name] ?? FolderIcon;
+
+            // pega cor específica da categoria
+            const colorName = CATEGORY_COLOR_MAP[category.name] ?? "purple";
+
+            // pega classes de hover correspondentes
+            const colorClass = SIDEBAR_COLOR_CLASSES[colorName];
 
             return (
               <li
                 key={category.id}
-                className='flex items-center gap-2 p-2 py-4 rounded hover:bg-rose-400 hover:text-gray-100 cursor-pointer transition'
+                className={`flex items-center gap-2 p-2 py-4 rounded cursor-pointer transition ${colorClass}`}
               >
                 <Icon size={20} />
                 <span>{category.name}</span>

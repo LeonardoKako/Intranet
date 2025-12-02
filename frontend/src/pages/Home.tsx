@@ -1,9 +1,29 @@
-import { HouseIcon, KeyRoundIcon } from "lucide-react";
+import { FolderIcon, HouseIcon } from "lucide-react";
 import Header from "../components/Header";
 import { SideBar } from "../components/SideBar";
 import { MenuCard } from "../components/MenuCard";
+import { useEffect, useState } from "react";
+import { categoryService } from "../api/categoryService";
+import type { Category } from "../types/types";
+import { CATEGORY_ICON_MAP } from "../utils/categoryIconMap";
+import { CATEGORY_COLOR_MAP } from "../utils/categoryMapColor";
+import { COLOR_MAP } from "../utils/menuCardColors";
 
 export default function Home() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  useEffect(() => {
+    async function loadAll() {
+      try {
+        const [c] = await Promise.all([categoryService.getAll()]);
+        setCategories(c);
+      } catch (err) {
+        console.error("Erro ao carregar dados:", err);
+      }
+    }
+
+    loadAll();
+  }, []);
+
   return (
     <section className='w-screen min-h-screen bg-gray-400'>
       <Header />
@@ -16,48 +36,25 @@ export default function Home() {
           </div>
           <div className='bg-gray-400 mx-auto w-full h-0.5 my-6 rounded'></div>
           <div className='mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 px-10'>
-            <MenuCard
-              title='Logins'
-              description='Controle de logins e senhas.'
-              children={<KeyRoundIcon size={36} className='text-orange-400' />}
-              color='orange'
-            />
-            <MenuCard
-              title='Logins'
-              description='Controle de logins e senhas.'
-              children={<KeyRoundIcon size={36} className='text-red-400' />}
-              color='red'
-            />
-            <MenuCard
-              title='Logins'
-              description='Controle de logins e senhas.'
-              children={<KeyRoundIcon size={36} className='text-blue-400' />}
-              color='blue'
-            />
-            <MenuCard
-              title='Logins'
-              description='Controle de logins e senhas.'
-              children={<KeyRoundIcon size={36} className='text-green-400' />}
-              color='green'
-            />
-            <MenuCard
-              title='Logins'
-              description='Controle de logins e senhas.'
-              children={<KeyRoundIcon size={36} className='text-pink-400' />}
-              color='pink'
-            />
-            <MenuCard
-              title='Logins'
-              description='Controle de logins e senhas.'
-              children={<KeyRoundIcon size={36} className='text-teal-400' />}
-              color='teal'
-            />
-            <MenuCard
-              title='Logins'
-              description='Controle de logins e senhas.'
-              children={<KeyRoundIcon size={36} className='text-yellow-400' />}
-              color='yellow'
-            />
+            {categories.map((category) => {
+              const Icon = CATEGORY_ICON_MAP[category.name] ?? FolderIcon;
+
+              const colorName = CATEGORY_COLOR_MAP[category.name] ?? "purple";
+
+              // aqui está a correção
+              const colorObj = COLOR_MAP[colorName];
+
+              return (
+                <MenuCard
+                  key={category.id}
+                  title={category.name}
+                  description={category.description}
+                  color={colorName}
+                  // agora o ícone usa a cor correspondente ao wave3
+                  children={<Icon size={36} className={colorObj.wave3} />}
+                />
+              );
+            })}
           </div>
         </main>
       </div>
