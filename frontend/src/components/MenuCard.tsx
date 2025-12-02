@@ -22,7 +22,7 @@ export function MenuCard({ title, description, children, color }: Props) {
       <div className={colors.wave1} />
       <div className={colors.wave2} />
 
-      <div className='relative z-10 flex flex-col items-center text-center p-6'>
+      <div className='relative z-10 flex flex-col items-center text-center p-6 '>
         {children}
         <h2 className='text-xl font-semibold mt-1'>{title}</h2>
         <p className='text-white opacity-0 group-hover:opacity-100 transition-all duration-300 mt-12 text-center font-semibold px-6'>
@@ -30,7 +30,7 @@ export function MenuCard({ title, description, children, color }: Props) {
         </p>
         <ArrowRightIcon
           size={24}
-          className='text-white opacity-0 group-hover:opacity-100 transition-all duration-300 mt-8'
+          className='text-white opacity-0 group-hover:opacity-100 transition-all duration-300 mt-2'
         />
       </div>
     </div>

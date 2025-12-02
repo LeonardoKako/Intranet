@@ -6,27 +6,27 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { categoryService } from "../api/categoryService";
-import type { Category } from "../types/types";
+import type { Category, User } from "../types/types";
 import { CATEGORY_ICON_MAP } from "../utils/categoryIconMap";
 import {
   CATEGORY_COLOR_MAP,
   SIDEBAR_COLOR_CLASSES,
 } from "../utils/categoryMapColor";
+import { usersService } from "../api/userService";
 
-type Props = {
-  user: {
-    nickname: string;
-  };
-};
-
-export function SideBar({ user }: Props) {
+export function SideBar() {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
     async function loadAll() {
       try {
         const [c] = await Promise.all([categoryService.getAll()]);
+        const [u] = await Promise.all([
+          usersService.getOne("32cf333c-a0bd-450a-a9c4-4ee1e106cce6"),
+        ]);
         setCategories(c);
+        setUser(u);
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
       }
@@ -40,7 +40,7 @@ export function SideBar({ user }: Props) {
       <div className='mt-4 flex items-center gap-4'>
         <CircleUserRoundIcon size={56} />
         <div className='flex flex-col items-start justify-end'>
-          <h2>{user.nickname}</h2>
+          <h2>{user?.nickname}</h2>
           <div className='flex items-center justify-center gap-2 cursor-pointer hover:text-rose-600 transition'>
             <a href='#' className='text-sm'>
               Visualizar perfil
@@ -54,7 +54,7 @@ export function SideBar({ user }: Props) {
 
       <nav>
         <ul className='flex flex-col gap-1'>
-          <li className='flex items-center gap-2 p-2 py-4 rounded hover:bg-rose-400 hover:text-gray-100 cursor-pointer transition'>
+          <li className='flex items-center gap-2 p-2 py-4 rounded hover:bg-gray-600 hover:text-gray-100 cursor-pointer transition'>
             <HouseIcon size={20} />
             <a href='#'>Home</a>
           </li>

@@ -44,10 +44,10 @@ GET {{baseurl}}/category/{{idCategory}}
 POST {{baseurl}}/category
 Content-Type: application/json
 
-{
-    "name": "Login", 
-    "description": "Logins de acesso"
-}
+ {
+    "name": "Documentação",
+    "description": "Documentos técnicos e manuais do sistema"
+  }
 
 ### Category Patch(idCategory) 
 PATCH {{baseurl}}/category/{{idCategory}}

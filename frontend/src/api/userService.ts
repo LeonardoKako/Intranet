@@ -7,6 +7,11 @@ export const usersService = {
     return response.data;
   },
 
+  getOne: async (id: string) => {
+    const response = await api.get(`/users/${id}`);
+    return response.data;
+  },
+
   create: async (data: CreateUserDto) => {
     const response = await api.post("/users", data);
     return response.data;
