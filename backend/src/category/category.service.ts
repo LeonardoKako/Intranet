@@ -22,7 +22,6 @@ export class CategoryService {
       const categoryData = {
         name: createCategoryDto.name,
         description: createCategoryDto.description,
-        icon: createCategoryDto.icon,
       };
 
       const newCategory = this.categoryRepository.create(categoryData);
@@ -59,7 +58,6 @@ export class CategoryService {
     const categoryData = {
       name: updateCategoryDto?.name,
       description: updateCategoryDto?.description,
-      icon: updateCategoryDto?.icon,
     };
 
     const categoryModified = {

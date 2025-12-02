@@ -1,5 +1,5 @@
 @baseurl = http://localhost:3000
-@idUser = b7eca887-e651-41fe-bc00-18369030f642
+@idUser = 32cf333c-a0bd-450a-a9c4-4ee1e106cce6
 
 ### Users findAll() 
 GET {{baseurl}}/users
@@ -32,7 +32,7 @@ DELETE {{baseurl}}/users/{{idUser}}
 
 ####################################################################
 
-@idCategory = 3690dfed-2b25-464b-87ee-48cdb4e6717e
+@idCategory = c26aec4e-2d18-4c01-bfcc-5eacba29e3c2
 
 ### Category findAll() 
 GET {{baseurl}}/category
@@ -46,8 +46,7 @@ Content-Type: application/json
 
 {
     "name": "Login", 
-    "description": "Logins de acesso",
-    "icon": "KeyRoundIcon"
+    "description": "Logins de acesso"
 }
 
 ### Category Patch(idCategory) 
@@ -82,7 +81,7 @@ Content-Type: application/json
     "description": "Opcional", 
     "url": "gmail.com", 
     "password": "Cpd69@dmin", 
-    "categoryId": "3690dfed-2basdd25-464b-87ee-48cdb4e6717e"
+    "categoryId": "c26aec4e-2d18-4c01-bfcc-5eacba29e3c2"
 
 }
 

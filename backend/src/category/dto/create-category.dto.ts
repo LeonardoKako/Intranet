@@ -8,8 +8,4 @@ export class CreateCategoryDto {
   @IsString()
   @MaxLength(255)
   description: string;
-
-  @IsString()
-  @MaxLength(255)
-  icon: string;
 }

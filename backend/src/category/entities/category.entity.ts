@@ -16,9 +16,6 @@ export class Category {
   @Column({ type: 'varchar', length: 255 })
   description: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  icon: string;
-
   @CreateDateColumn()
   createdAt: Date;
 }
