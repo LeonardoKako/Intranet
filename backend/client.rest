@@ -32,7 +32,7 @@ DELETE {{baseurl}}/users/{{idUser}}
 
 ####################################################################
 
-@idCategory = f90fa45a-0775-4c36-a339-91683ef0124b
+@idCategory = 3690dfed-2b25-464b-87ee-48cdb4e6717e
 
 ### Category findAll() 
 GET {{baseurl}}/category
@@ -82,7 +82,7 @@ Content-Type: application/json
     "description": "Opcional", 
     "url": "gmail.com", 
     "password": "Cpd69@dmin", 
-    "categoryId": "f90fa45a-0775-4c36-a339-91683ef0124b"
+    "categoryId": "3690dfed-2basdd25-464b-87ee-48cdb4e6717e"
 
 }
 

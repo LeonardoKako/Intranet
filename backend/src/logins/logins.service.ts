@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Login } from './entities/login.entity';
 import { Repository } from 'typeorm';
 import { CategoryService } from 'src/category/category.service';
+import { validate } from 'uuid';
 
 @Injectable()
 export class LoginsService {
@@ -16,7 +17,12 @@ export class LoginsService {
 
   async create(createLoginDto: CreateLoginDto) {
     const { categoryId } = createLoginDto;
+    if (!validate(categoryId)) {
+      throw new NotFoundException('ID inválido');
+    }
     const category = await this.categoryService.findOne(categoryId);
+
+    if (!category) throw new NotFoundException('Categoria não encontrada');
 
     const loginData = {
       title: createLoginDto.title,
@@ -41,6 +47,9 @@ export class LoginsService {
   }
 
   async findOne(id: string) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
     const login = await this.loginRepository.findOneBy({ id });
 
     if (!login) throw new NotFoundException('Login não encontrado');
@@ -49,6 +58,9 @@ export class LoginsService {
   }
 
   async update(id: string, updateLoginDto: UpdateLoginDto) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
     const loginData = {
       title: updateLoginDto?.title,
       username: updateLoginDto?.username,
@@ -70,6 +82,9 @@ export class LoginsService {
   }
 
   async remove(id: string) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
     const login = await this.loginRepository.findOneBy({ id });
 
     if (!login) throw new NotFoundException('Login não encontrado');

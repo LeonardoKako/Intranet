@@ -8,6 +8,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
+import { validate } from 'uuid';
 
 @Injectable()
 export class CategoryService {
@@ -42,12 +43,19 @@ export class CategoryService {
   }
 
   async findOne(id: string) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
     const category = await this.categoryRepository.findOneBy({ id });
     if (!category) throw new NotFoundException('Categoria não encontrada');
     return category;
   }
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
+
     const categoryData = {
       name: updateCategoryDto?.name,
       description: updateCategoryDto?.description,
@@ -69,6 +77,10 @@ export class CategoryService {
   }
 
   async remove(id: string) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
+
     const category = await this.categoryRepository.findOneBy({ id });
     if (!category) throw new NotFoundException('Categoria não encontrada');
 

@@ -8,6 +8,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { validate } from 'uuid';
 
 @Injectable()
 export class UsersService {
@@ -42,6 +43,9 @@ export class UsersService {
   }
 
   async findOne(id: string) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
     const user = await this.userRepository.findOneBy({ id });
 
     if (!user) throw new NotFoundException('Usuário não encontrado');
@@ -50,6 +54,9 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
     const userData = {
       fullName: updateUserDto?.fullName,
       nickname: updateUserDto?.nickname,
@@ -70,6 +77,9 @@ export class UsersService {
   }
 
   async remove(id: string) {
+    if (!validate(id)) {
+      throw new NotFoundException('ID inválido');
+    }
     const user = await this.userRepository.findOneBy({ id });
 
     if (!user) throw new NotFoundException('Usuário não encontrado');
