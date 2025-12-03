@@ -1,4 +1,4 @@
-import { CopyIcon } from "lucide-react";
+import { BadgePlusIcon, CopyIcon, PencilIcon } from "lucide-react";
 import type { Login } from "../types/types";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
@@ -28,46 +28,68 @@ export function ModernTable({ logins }: Props) {
             <th className='py-3 px-4 text-left'>Password</th>
             <th className='py-3 px-4 text-left'>Description</th>
             <th className='py-3 px-4 text-left'>URL</th>
+            <th className='py-3 px-4 flex items-center justify-center'>
+              <BadgePlusIcon
+                size={32}
+                className='hover:scale-110 cursor-pointer transition '
+              />
+            </th>
           </tr>
         </thead>
 
         <tbody>
           {logins.map((item) => (
-            <tr key={item.id} className='bg-gray-100 border-b border-gray-300'>
+            <tr key={item.id} className='bg-white border-b border-gray-300'>
               <td className='py-3 px-4 border-r border-gray-300'>
                 {truncate(item.title, 24)}
               </td>
               <td
-                className='py-3 px-4 border-r border-gray-300 cursor-pointer hover:bg-gray-200 transition
+                className='py-3 px-4 border-r border-gray-300 
                 flex items-center justify-between'
-                onClick={() => handleCopy(item.username)}
                 title='Clique para copiar'
               >
                 {truncate(item.username, 36)}
-                <CopyIcon size={16} />
+                <CopyIcon
+                  size={18}
+                  onClick={() => handleCopy(item.username)}
+                  className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
+                />
               </td>
               <td
-                className='py-3 px-4 border-r border-gray-300 cursor-pointer hover:bg-gray-200 transition
-              '
-                onClick={() => handleCopy(item.username)}
+                className='py-3 px-4 border-r border-gray-300'
                 title='Clique para copiar'
               >
                 <div className='flex items-center justify-between'>
                   {truncate(item.password, 40)}
-                  <CopyIcon size={16} />
+                  <CopyIcon
+                    size={18}
+                    onClick={() => handleCopy(item.username)}
+                    className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
+                  />
                 </div>
               </td>
               <td className='py-3 px-4 border-r border-gray-300'>
                 {truncate(item.description, 28)}
               </td>
               <td
-                className='py-3 px-4 border-r border-gray-300 cursor-pointer hover:bg-gray-200 transition 
+                className='py-3 px-4 border-r border-gray-300  
                 flex items-center justify-between'
-                onClick={() => handleCopy(item.url)}
                 title='Clique para copiar'
               >
                 {truncate(item.url, 32)}
-                <CopyIcon size={16} />
+                <CopyIcon
+                  size={18}
+                  onClick={() => handleCopy(item.username)}
+                  className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
+                />
+              </td>
+              <td className='py-3 px-4'>
+                <span className='flex items-center justify-center'>
+                  <PencilIcon
+                    size={18}
+                    className='hover:scale-120 transition-transform hover:text-blue-400 cursor-pointer'
+                  />
+                </span>
               </td>
             </tr>
           ))}
