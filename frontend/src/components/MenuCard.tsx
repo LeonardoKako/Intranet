@@ -1,15 +1,19 @@
 import { ArrowRightIcon } from "lucide-react";
 import clsx from "clsx";
 import { COLOR_MAP, type ColorName } from "../utils/menuCardColors";
+import { useNavigate } from "react-router";
 
 type Props = {
   title: string;
   description: string;
   children: React.ReactNode;
   color: ColorName;
+  link: string;
 };
 
-export function MenuCard({ title, description, children, color }: Props) {
+export function MenuCard({ title, description, children, color, link }: Props) {
+  const navigate = useNavigate();
+
   const colors = COLOR_MAP[color];
 
   return (
@@ -18,6 +22,7 @@ export function MenuCard({ title, description, children, color }: Props) {
         "relative w-56 h-64 rounded-2xl shadow-lg overflow-hidden cursor-pointer group",
         "hover:scale-105 hover:h-72 transition-all duration-300 bg-white"
       )}
+      onClick={() => navigate(link)}
     >
       <div className={colors.wave1} />
       <div className={colors.wave2} />

@@ -13,6 +13,7 @@ import {
   SIDEBAR_COLOR_CLASSES,
 } from "../utils/categoryMapColor";
 import { usersService } from "../api/userService";
+import { NavLink } from "react-router";
 
 export function SideBar() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -36,7 +37,7 @@ export function SideBar() {
   }, []);
 
   return (
-    <aside className='min-w-72 min-h-[89.8vh] bg-gray-100 p-6 flex flex-col text-black rounded'>
+    <aside className='w-full max-w-64 lg:max-w-72 min-h-[89.8vh] bg-gray-100 p-6 flex flex-col text-black rounded'>
       <div className='mt-4 flex items-center gap-4'>
         <CircleUserRoundIcon size={56} />
         <div className='flex flex-col items-start justify-end'>
@@ -54,10 +55,13 @@ export function SideBar() {
 
       <nav>
         <ul className='flex flex-col gap-1'>
-          <li className='flex items-center gap-2 p-2 py-4 rounded hover:bg-gray-600 hover:text-gray-100 cursor-pointer transition'>
+          <NavLink
+            to={"/"}
+            className='flex items-center gap-2 p-2 py-4 rounded hover:bg-gray-600 hover:text-gray-100 cursor-pointer transition'
+          >
             <HouseIcon size={20} />
-            <a href='#'>Home</a>
-          </li>
+            <p>Home</p>
+          </NavLink>
 
           {categories.map((category) => {
             const Icon = CATEGORY_ICON_MAP[category.name] ?? FolderIcon;
@@ -69,13 +73,17 @@ export function SideBar() {
             const colorClass = SIDEBAR_COLOR_CLASSES[colorName];
 
             return (
-              <li
+              <NavLink
+                to={`/${category.name
+                  .toLowerCase()
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "")}`}
                 key={category.id}
                 className={`flex items-center gap-2 p-2 py-4 rounded cursor-pointer transition ${colorClass}`}
               >
                 <Icon size={20} />
                 <span>{category.name}</span>
-              </li>
+              </NavLink>
             );
           })}
         </ul>

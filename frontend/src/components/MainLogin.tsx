@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import type { Login } from "../types/types";
 import { loginService } from "../api/loginsService";
+import { HeaderMain } from "./HeaderMain";
+import { KeyRoundIcon } from "lucide-react";
+import { ModernTable } from "./ModernTable";
 
 export function MainLogin() {
   const [logins, setLogins] = useState<Login[]>([]);
@@ -19,12 +22,9 @@ export function MainLogin() {
   console.log(logins);
 
   return (
-    <main>
-      <ul>
-        {logins.map((login) => (
-          <li key={login.id}>{login.id}</li>
-        ))}
-      </ul>
+    <main className='w-full min-h-[89.8vh] bg-gray-100 p-6 px-10 rounded'>
+      <HeaderMain title='Login' icon={<KeyRoundIcon size={56} />} />
+      <ModernTable logins={logins} />
     </main>
   );
 }
