@@ -78,8 +78,7 @@ Content-Type: application/json
 {
     "title": "Gmail do atendimento.ti", 
     "username": "atendimento.ti@unicesusc.edu.br", 
-    "description": "Opcional", 
-    "url": "gmail.com", 
+    "url": "www.gmail.com", 
     "password": "Cpd69@dmin", 
     "categoryId": "c614ec1a-44ef-4d91-8e6d-cbbc59621808"
 
@@ -94,7 +93,6 @@ Content-Type: application/json
 {
     "title": "Gmail do atendimento.ti atualizado", 
     "username": "atendimento.ti@unicesusc.edu.br atualizado", 
-    "description": "Opcional atualizado", 
     "url": "gmail.com atualizado", 
     "password": "Cpd69@dmin atualizado",
 }

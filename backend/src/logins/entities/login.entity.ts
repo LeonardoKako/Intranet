@@ -20,9 +20,6 @@ export class Login {
   @Column({ type: 'varchar', length: 255 })
   username: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  description: string;
-
   @Column({ type: 'varchar', length: 80 })
   password: string;
 

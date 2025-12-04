@@ -13,11 +13,6 @@ export class CreateLoginDto {
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
-  description: string;
-
-  @IsString()
-  @IsNotEmpty()
   @MaxLength(80)
   password: string;
 

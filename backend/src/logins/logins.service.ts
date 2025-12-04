@@ -27,7 +27,6 @@ export class LoginsService {
     const loginData = {
       title: createLoginDto.title,
       username: createLoginDto.username,
-      description: createLoginDto.description,
       url: createLoginDto.url,
       password: createLoginDto.password,
       category,
@@ -64,7 +63,6 @@ export class LoginsService {
     const loginData = {
       title: updateLoginDto?.title,
       username: updateLoginDto?.username,
-      description: updateLoginDto?.description,
       url: updateLoginDto?.url,
       password: updateLoginDto?.password,
     };
