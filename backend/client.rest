@@ -94,7 +94,7 @@ Content-Type: application/json
     "title": "Gmail do atendimento.ti atualizado", 
     "username": "atendimento.ti@unicesusc.edu.br atualizado", 
     "url": "gmail.com atualizado", 
-    "password": "Cpd69@dmin atualizado",
+    "password": "Cpd69@dmin atualizado"
 }
 
 ### login Remove(idLogin) 
