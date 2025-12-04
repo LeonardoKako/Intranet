@@ -19,7 +19,6 @@ export function MainLogin() {
 
     loadAll();
   }, []);
-  console.log(logins);
 
   return (
     <main className='w-full min-h-[89.8vh] bg-gray-100 p-6 px-10 rounded'>
