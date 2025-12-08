@@ -43,9 +43,9 @@ export function SideBar() {
         <div className='flex flex-col items-start justify-end'>
           <h2>{user?.nickname}</h2>
           <div className='flex items-center justify-center gap-2 cursor-pointer hover:text-rose-600 transition'>
-            <a href='#' className='text-sm'>
-              Visualizar perfil
-            </a>
+            <NavLink to={"/settings"} className='text-sm'>
+              Editar Perfil
+            </NavLink>
             <SquarePenIcon size={14} className='mt-[2.5px]' />
           </div>
         </div>
