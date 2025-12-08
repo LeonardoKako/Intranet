@@ -1,4 +1,3 @@
-import type { Login } from "../types/types";
 import Header from "../components/Header";
 import { SideBar } from "../components/SideBar";
 import { MainLogin } from "../components/MainLogin";
