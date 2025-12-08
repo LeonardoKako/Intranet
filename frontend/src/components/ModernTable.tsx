@@ -4,6 +4,8 @@ import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { Modal } from "./Modal";
 import { FormEdit } from "./FormEdit";
+import { loginService } from "../api/loginsService";
+import { FormCreate } from "./FormCreate";
 
 type Props = {
   logins: Login[];
@@ -30,14 +32,37 @@ export function ModernTable({ logins }: Props) {
     toast.success("Texto copiado!");
   }, []);
 
+  async function handleRemoveClick(id: string) {
+    try {
+      if (confirm("Tem certeza que deseja deletar este item?")) {
+        await loginService.delete(id);
+        toast.success(
+          `Item deletado com sucesso! Por favor, atualize a página.`
+        );
+      } else {
+        toast.info("Ação de remoção cancelada.");
+      }
+    } catch {
+      toast.error("Erro ao remover o item. Tente novamente!");
+    }
+  }
+
   return (
     <>
       {openEditTable && (
         <Modal
           title='Edite como quiser'
           icon={<PencilIcon size={32} />}
-          form={<FormEdit id={selectedId!} />} // <-- envia o ID correto
+          form={<FormEdit functionState={setOpenEditTable} id={selectedId!} />}
           functionState={setOpenEditTable}
+        />
+      )}
+      {openCreateTable && (
+        <Modal
+          title='Crie um novo login'
+          icon={<BadgePlusIcon size={32} />}
+          form={<FormCreate functionState={setOpenCreateTable} />}
+          functionState={setOpenCreateTable}
         />
       )}
       <div className='overflow-hidden rounded-xl border border-gray-300 shadow-sm'>
@@ -63,7 +88,7 @@ export function ModernTable({ logins }: Props) {
               <>
                 <tr key={item.id} className='bg-white border-b border-gray-300'>
                   <td className='py-3 px-4 border-r border-gray-300'>
-                    {truncate(item.title, 36)}
+                    {truncate(item.title, 28)}
                   </td>
                   <td
                     className='py-3 px-4 border-r border-gray-300 
@@ -95,7 +120,7 @@ export function ModernTable({ logins }: Props) {
                 flex items-center justify-between'
                     title='Clique para copiar'
                   >
-                    {truncate(item.url, 64)}
+                    {truncate(item.url, 48)}
                     <CopyIcon
                       size={18}
                       onClick={() => handleCopy(item.username)}
@@ -111,7 +136,7 @@ export function ModernTable({ logins }: Props) {
                       />
                       <Trash2Icon
                         size={18}
-                        onClick={() => handleEditClick(item.id)}
+                        onClick={() => handleRemoveClick(item.id)}
                         className='hover:scale-120 transition-transform hover:text-red-500 cursor-pointer'
                       />
                     </span>

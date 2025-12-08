@@ -9,6 +9,8 @@ export function MainLogin() {
   const [logins, setLogins] = useState<Login[]>([]);
   useEffect(() => {
     async function loadAll() {
+      console.log("chamado api");
+
       try {
         const [l] = await Promise.all([loginService.getAll()]);
         setLogins(l);

@@ -1,83 +1,85 @@
 import { useEffect, useState } from "react";
-import type { Login } from "../types/types";
 import { loginService } from "../api/loginsService";
-import type { UpdateLoginDto } from "../api/dto/login.dto";
+import type { CreateLoginDto } from "../api/dto/login.dto";
 import { toast } from "react-toastify";
+import { categoryService } from "../api/categoryService";
+import type { Category } from "../types/types";
 
 type Props = {
-  id: string;
   functionState: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export function FormEdit({ id, functionState }: Props) {
-  const [login, setLogin] = useState<Login | null>(null);
+export function FormCreate({ functionState }: Props) {
   const [title, setTitle] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    async function getOneData(id: string) {
-      try {
-        setIsLoading(true);
-        const loginData = await loginService.getOne(id);
-        setLogin(loginData);
+  const [categoryId, setCategoryId] = useState<string>("");
 
-        // Preenche os estados dos inputs com os dados do login
-        setTitle(loginData.title || "");
-        setUsername(loginData.username || "");
-        setPassword(loginData.password || "");
-        setUrl(loginData.url || "");
+  useEffect(() => {
+    async function getIdCategory() {
+      try {
+        const categories = await categoryService.getAll();
+
+        const found = categories.find(
+          (c: Category) => c.name.toLowerCase() === "login".toLowerCase()
+        );
+
+        if (found) {
+          setCategoryId(found.id);
+        } else {
+          console.warn("Categoria 'Login' não encontrada");
+        }
       } catch (err) {
         console.error("Erro ao carregar dados:", err);
-        toast.error("Erro ao carregar os dados do login");
+        toast.error("Erro ao carregar os dados necessários");
       } finally {
         setIsLoading(false);
       }
     }
 
-    if (id) {
-      getOneData(id);
-    }
-  }, [id]);
+    getIdCategory();
+  }, []);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (!login) {
-      toast.error("Nenhum login carregado para atualizar");
-      return;
-    }
 
-    const updatedLogin: UpdateLoginDto = {
-      title: title || login.title,
-      username: username || login.username,
-      password: password || login.password,
-      url: url || login.url,
+    const newLogin: CreateLoginDto = {
+      title,
+      username,
+      password,
+      url,
+      categoryId, // Defina um valor padrão ou modifique conforme necessário
     };
 
     try {
-      await loginService.update(id, updatedLogin);
-      toast.success("Login atualizado com sucesso!");
-      setLogin({
-        ...login,
-        ...updatedLogin,
-      });
+      if (newLogin.title.length < 3 || newLogin.title.length > 80) {
+        return toast.error("O título deve ter entre 3 e 80 caracteres.");
+      }
+      if (newLogin.username.length < 3 || newLogin.username.length > 80) {
+        return toast.error("O username deve ter entre 3 e 80 caracteres.");
+      }
+      if (newLogin.password.length < 3 || newLogin.password.length > 80) {
+        return toast.error("A senha deve ter entre 3 e 80 caracteres.");
+      }
+      if (newLogin.url.length < 3 || newLogin.url.length > 80) {
+        return toast.error("A url deve ter entre 3 e 80 caracteres.");
+      }
+      if (!newLogin.url.includes("www")) {
+        return toast.error("A url deve conter 'www'");
+      }
+      await loginService.create(newLogin);
+      toast.success("Login criado com sucesso!");
       functionState(false); // Fecha o modal após a atualização
-    } catch (err) {
-      console.error("Erro ao atualizar login:", err);
-      toast.error("Erro ao atualizar o login. Tente novamente!");
+    } catch {
+      toast.error("Erro ao criar o login. Tente novamente!");
     }
   }
 
   if (isLoading) {
     return <div className='p-4 text-center'>Carregando...</div>;
-  }
-
-  if (!login) {
-    return (
-      <div className='p-4 text-center text-red-500'>Login não encontrado</div>
-    );
   }
 
   return (
@@ -139,7 +141,7 @@ export function FormEdit({ id, functionState }: Props) {
         className='mt-2 bg-green-500 text-white py-2 rounded hover:bg-green-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed cursor-pointer'
         disabled={isLoading}
       >
-        {isLoading ? "Salvando..." : "Salvar alterações"}
+        {isLoading ? "Criando..." : "Criar Login"}
       </button>
     </form>
   );
