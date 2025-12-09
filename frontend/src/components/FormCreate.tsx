@@ -4,6 +4,7 @@ import type { CreateLoginDto } from "../api/dto/login.dto";
 import { toast } from "react-toastify";
 import { categoryService } from "../api/categoryService";
 import type { Category } from "../types/types";
+import isURL from "validator/lib/isUrl";
 
 type Props = {
   functionState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -67,9 +68,10 @@ export function FormCreate({ functionState }: Props) {
       if (newLogin.url.length < 3 || newLogin.url.length > 80) {
         return toast.error("A url deve ter entre 3 e 80 caracteres.");
       }
-      if (!newLogin.url.includes("www")) {
-        return toast.error("A url deve conter 'www'");
+      if (!isURL(newLogin.url, { require_protocol: true })) {
+        return toast.error("A URL precisa incluir http:// ou https://");
       }
+
       await loginService.create(newLogin);
       toast.success("Login criado com sucesso!");
       functionState(false); // Fecha o modal após a atualização
@@ -86,7 +88,7 @@ export function FormCreate({ functionState }: Props) {
     <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
       {/* TITLE */}
       <label className='flex flex-col gap-1'>
-        <span className='font-medium'>Title</span>
+        <span className='font-medium'>Título</span>
         <input
           name='title'
           type='text'
@@ -110,6 +112,19 @@ export function FormCreate({ functionState }: Props) {
         />
       </label>
 
+      {/* PASSWORD */}
+      <label className='flex flex-col gap-1'>
+        <span className='font-medium'>Senha</span>
+        <input
+          name='password'
+          type='text'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className='border rounded px-3 py-2'
+          placeholder='Digite a senha'
+        />
+      </label>
+
       {/* URL */}
       <label className='flex flex-col gap-1'>
         <span className='font-medium'>URL</span>
@@ -120,19 +135,6 @@ export function FormCreate({ functionState }: Props) {
           onChange={(e) => setUrl(e.target.value)}
           className='border rounded px-3 py-2'
           placeholder='Digite a URL'
-        />
-      </label>
-
-      {/* PASSWORD */}
-      <label className='flex flex-col gap-1'>
-        <span className='font-medium'>Password</span>
-        <input
-          name='password'
-          type='text'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className='border rounded px-3 py-2'
-          placeholder='Digite a senha'
         />
       </label>
 

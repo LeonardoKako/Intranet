@@ -6,4 +6,4 @@ export type CreateLoginDto = {
   categoryId: string;
 };
 
-export type UpdateLoginDto = Partial<Omit<CreateLoginDto, "categoryId">>;
+export type UpdateLoginDto = Omit<CreateLoginDto, "categoryId">;

@@ -69,9 +69,9 @@ export function ModernTable({ logins }: Props) {
         <table className='w-full border-collapse'>
           <thead>
             <tr className='bg-blue-400 text-white'>
-              <th className='py-3 px-4 text-left'>Title</th>
+              <th className='py-3 px-4 text-left'>Título</th>
               <th className='py-3 px-4 text-left'>Username</th>
-              <th className='py-3 px-4 text-left'>Password</th>
+              <th className='py-3 px-4 text-left'>Senha</th>
               <th className='py-3 px-4 text-left'>URL</th>
               <th className='py-3 px-4 flex items-center justify-center'>
                 <BadgePlusIcon
@@ -123,7 +123,7 @@ export function ModernTable({ logins }: Props) {
                     {truncate(item.url, 48)}
                     <CopyIcon
                       size={18}
-                      onClick={() => handleCopy(item.username)}
+                      onClick={() => handleCopy(item.url)}
                       className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
                     />
                   </td>
