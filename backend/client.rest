@@ -24,6 +24,8 @@ Content-Type: application/json
 
 {
     "fullName": "Leonardo João Fleith att", 
+    "email": "fleithkako@gmail.com", 
+    "nickname": "Leo", 
     "password": "senha123 att"  
 }
 
