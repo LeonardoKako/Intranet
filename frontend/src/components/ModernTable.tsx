@@ -19,7 +19,6 @@ function truncate(text: string, max: number) {
 export function ModernTable({ logins }: Props) {
   const [openEditTable, setOpenEditTable] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-
   const [openCreateTable, setOpenCreateTable] = useState(false);
 
   const handleEditClick = (id: string) => {
@@ -85,64 +84,62 @@ export function ModernTable({ logins }: Props) {
 
           <tbody>
             {logins.map((item) => (
-              <>
-                <tr key={item.id} className='bg-white border-b border-gray-300'>
-                  <td className='py-3 px-4 border-r border-gray-300'>
-                    {truncate(item.title, 28)}
-                  </td>
-                  <td
-                    className='py-3 px-4 border-r border-gray-300 
+              <tr key={item.id} className='bg-white border-b border-gray-300'>
+                <td className='py-3 px-4 border-r border-gray-300'>
+                  {truncate(item.title, 28)}
+                </td>
+                <td
+                  className='py-3 px-4 border-r border-gray-300 
                 flex items-center justify-between'
-                    title='Clique para copiar'
-                  >
-                    {truncate(item.username, 48)}
+                  title='Clique para copiar'
+                >
+                  {truncate(item.username, 48)}
+                  <CopyIcon
+                    size={18}
+                    onClick={() => handleCopy(item.username)}
+                    className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
+                  />
+                </td>
+                <td
+                  className='py-3 px-4 border-r border-gray-300'
+                  title='Clique para copiar'
+                >
+                  <div className='flex items-center justify-between'>
+                    {truncate(item.password, 56)}
                     <CopyIcon
                       size={18}
-                      onClick={() => handleCopy(item.username)}
+                      onClick={() => handleCopy(item.password)}
                       className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
                     />
-                  </td>
-                  <td
-                    className='py-3 px-4 border-r border-gray-300'
-                    title='Clique para copiar'
-                  >
-                    <div className='flex items-center justify-between'>
-                      {truncate(item.password, 56)}
-                      <CopyIcon
-                        size={18}
-                        onClick={() => handleCopy(item.password)}
-                        className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
-                      />
-                    </div>
-                  </td>
-                  <td
-                    className='py-3 px-4 border-r border-gray-300  
+                  </div>
+                </td>
+                <td
+                  className='py-3 px-4 border-r border-gray-300  
                 flex items-center justify-between'
-                    title='Clique para copiar'
-                  >
-                    {truncate(item.url, 48)}
-                    <CopyIcon
+                  title='Clique para copiar'
+                >
+                  {truncate(item.url, 48)}
+                  <CopyIcon
+                    size={18}
+                    onClick={() => handleCopy(item.url)}
+                    className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
+                  />
+                </td>
+                <td className='py-3 px-4'>
+                  <span className='flex items-center justify-center gap-2'>
+                    <PencilIcon
                       size={18}
-                      onClick={() => handleCopy(item.url)}
-                      className='hover:scale-110 transition-transform hover:text-blue-400 cursor-pointer'
+                      onClick={() => handleEditClick(item.id)}
+                      className='hover:scale-120 transition-transform hover:text-blue-400 cursor-pointer'
                     />
-                  </td>
-                  <td className='py-3 px-4'>
-                    <span className='flex items-center justify-center gap-2'>
-                      <PencilIcon
-                        size={18}
-                        onClick={() => handleEditClick(item.id)}
-                        className='hover:scale-120 transition-transform hover:text-blue-400 cursor-pointer'
-                      />
-                      <Trash2Icon
-                        size={18}
-                        onClick={() => handleRemoveClick(item.id)}
-                        className='hover:scale-120 transition-transform hover:text-red-500 cursor-pointer'
-                      />
-                    </span>
-                  </td>
-                </tr>
-              </>
+                    <Trash2Icon
+                      size={18}
+                      onClick={() => handleRemoveClick(item.id)}
+                      className='hover:scale-120 transition-transform hover:text-red-500 cursor-pointer'
+                    />
+                  </span>
+                </td>
+              </tr>
             ))}
           </tbody>
         </table>

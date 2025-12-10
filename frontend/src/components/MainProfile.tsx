@@ -26,6 +26,10 @@ export function MainProfile({ user }: Props) {
     setEmail(user.email);
   }, [user]);
 
+  if (!user) {
+    return <div>Carregando...</div>;
+  }
+
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 

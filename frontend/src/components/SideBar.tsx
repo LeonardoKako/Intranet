@@ -56,7 +56,7 @@ export function SideBar() {
       <nav>
         <ul className='flex flex-col gap-1'>
           <NavLink
-            to={"/"}
+            to={"/home"}
             className='flex items-center gap-2 p-2 py-4 rounded hover:bg-gray-600 hover:text-gray-100 cursor-pointer transition'
           >
             <HouseIcon size={20} />
