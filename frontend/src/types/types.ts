@@ -20,10 +20,11 @@ export type Category = {
 
 export type User = {
   id: string;
-  fullName: string;
   email: string;
+  fullName: string;
   nickname: string;
-  passwordHash: string;
-  createdAt: Date;
-  updatedAt: Date;
+  role?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  // NÃO inclua password ou passwordHash aqui!
 };

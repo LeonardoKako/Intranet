@@ -5,4 +5,15 @@ export type CreateUserDto = {
   password: string;
 };
 
-export type UpdateUserDto = Partial<CreateUserDto>;
+export type UpdateUserDto = {
+  fullName?: string;
+  nickname?: string;
+  email?: string;
+  oldPassword?: string; // Para verificar antes de alterar a senha
+  newPassword?: string; // Nova senha (opcional)
+};
+
+export type LoginUserDto = {
+  email: string;
+  password: string;
+};

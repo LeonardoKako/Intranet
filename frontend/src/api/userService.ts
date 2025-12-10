@@ -1,24 +1,25 @@
+import type { User } from "../types/types";
 import { api } from "./api";
 import type { CreateUserDto, UpdateUserDto } from "./dto/user.dto";
 
 export const usersService = {
-  getAll: async () => {
-    const response = await api.get("/users");
+  async getOne(id: string): Promise<User> {
+    const response = await api.get(`/users/${id}`);
     return response.data;
   },
 
-  getOne: async (id: string) => {
-    const response = await api.get(`/users/${id}`);
+  async update(id: string, data: UpdateUserDto): Promise<User> {
+    const response = await api.put(`/users/${id}`, data);
+    return response.data;
+  },
+
+  async getAll(): Promise<User[]> {
+    const response = await api.get("/users");
     return response.data;
   },
 
   create: async (data: CreateUserDto) => {
     const response = await api.post("/users", data);
-    return response.data;
-  },
-
-  update: async (id: string, data: UpdateUserDto) => {
-    const response = await api.patch(`/users/${id}`, data);
     return response.data;
   },
 
