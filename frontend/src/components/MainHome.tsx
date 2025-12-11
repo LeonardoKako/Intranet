@@ -39,7 +39,7 @@ export function MainHome() {
               description={category.description}
               color={colorName}
               children={<Icon size={36} className={colorObj.wave3} />}
-              link={`/${category.name
+              link={`/category/${category.name
                 .toLowerCase()
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "")}`}

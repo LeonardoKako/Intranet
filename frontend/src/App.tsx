@@ -22,7 +22,7 @@ export default function App() {
             }
           />
           <Route
-            path='/login'
+            path='/category/login'
             element={
               <ProtectedRoute>
                 <Login />

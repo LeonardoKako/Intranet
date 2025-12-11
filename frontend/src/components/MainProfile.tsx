@@ -152,7 +152,7 @@ export function MainProfile({
     newPassword !== "";
 
   return (
-    <main className='w-full min-h-full bg-white rounded-lg shadow-xl p-6'>
+    <main className='w-full min-h-full bg-gray-100 rounded-lg shadow-xl p-6'>
       <HeaderMain
         title='Editar Perfil'
         icon={<UserIcon size={56} className='text-blue-500' />}

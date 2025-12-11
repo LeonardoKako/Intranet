@@ -101,3 +101,15 @@ Content-Type: application/json
 
 ### login Remove(idLogin) 
 DELETE {{baseurl}}/logins/{{idLogin}}
+
+####################################################################
+
+### Auth login() 
+POST {{baseurl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "apoio03.ti@unicesusc.edu.br",
+  "password": "senhaLeo"
+}
+

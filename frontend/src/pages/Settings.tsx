@@ -69,9 +69,9 @@ export default function Settings() {
   }
 
   return (
-    <section className='w-screen min-h-screen bg-linear-to-br from-gray-900 to-gray-800'>
+    <section className='w-screen min-h-screen bg-gray-400'>
       <Header />
-      <div className='mt-1 flex gap-1 min-h-[calc(100vh-80px)]'>
+      <div className='mt-[0.2vh] flex gap-[0.2vh]'>
         <SideBar />
         <div className='flex-1'>
           {refreshing && (

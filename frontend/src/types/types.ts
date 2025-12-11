@@ -18,13 +18,18 @@ export type Category = {
   createdAt: Date;
 };
 
+// types/types.ts
 export type User = {
-  id: string;
-  email: string;
+  id: string; // UUID - string
   fullName: string;
+  email: string;
   nickname: string;
-  role?: string;
   createdAt?: string;
   updatedAt?: string;
-  // NÃO inclua password ou passwordHash aqui!
+  // NUNCA inclua passwordHash aqui!
+};
+
+export type LoginResponse = {
+  user: User;
+  accessToken: string;
 };

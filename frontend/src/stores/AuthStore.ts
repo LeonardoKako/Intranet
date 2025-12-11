@@ -1,45 +1,62 @@
-// stores/authStore.ts
+// stores/AuthStore.ts
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
-import type { User } from "../types/types";
+import { persist } from "zustand/middleware";
+
+export type User = {
+  id: string; // Agora é string (UUID)
+  email: string;
+  fullName: string;
+  nickname: string;
+  role?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  // NÃO inclua passwordHash aqui!
+};
 
 type AuthState = {
   user: User | null;
+  accessToken: string | null;
   isAuthenticated: boolean;
   loginTime: number | null;
-  login: (userData: User) => void;
+  login: (userData: User, token: string) => void;
   logout: () => void;
   updateUser: (userData: Partial<User>) => void;
-  checkSession: () => boolean; // Verifica se a sessão ainda é válida
-  clearLoginTime: () => void; // Para limpar quando fazer logout manual
+  checkSession: () => boolean;
 };
 
-// 5 minutos em milissegundos
-const MINUTES = 5;
-const SESSION_TIMEOUT = MINUTES * 60 * 1000;
+const SESSION_TIMEOUT = 5 * 60 * 1000; // 5 minutos
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       user: null,
+      accessToken: null,
       isAuthenticated: false,
       loginTime: null,
 
-      login: (userData: User) => {
+      login: (userData: User, token: string) => {
         const now = Date.now();
         set({
           user: userData,
+          accessToken: token,
           isAuthenticated: true,
           loginTime: now,
         });
+
+        // Salvar token no localStorage para o axios interceptor
+        localStorage.setItem("accessToken", token);
       },
 
       logout: () => {
         set({
           user: null,
+          accessToken: null,
           isAuthenticated: false,
           loginTime: null,
         });
+
+        // Remover token do localStorage
+        localStorage.removeItem("accessToken");
       },
 
       updateUser: (userData: Partial<User>) => {
@@ -49,16 +66,15 @@ export const useAuthStore = create<AuthState>()(
       },
 
       checkSession: () => {
-        const { loginTime, isAuthenticated } = get();
+        const { loginTime, isAuthenticated, accessToken } = get();
 
-        if (!isAuthenticated || !loginTime) {
+        if (!isAuthenticated || !loginTime || !accessToken) {
           return false;
         }
 
         const now = Date.now();
         const sessionAge = now - loginTime;
 
-        // Se passou mais de 5 minutos, faz logout automático
         if (sessionAge > SESSION_TIMEOUT) {
           get().logout();
           return false;
@@ -66,17 +82,12 @@ export const useAuthStore = create<AuthState>()(
 
         return true;
       },
-
-      clearLoginTime: () => {
-        set({ loginTime: null });
-      },
     }),
     {
       name: "auth-storage",
-      storage: createJSONStorage(() => localStorage),
-      // Persistir apenas o necessário
       partialize: (state) => ({
         user: state.user,
+        accessToken: state.accessToken,
         isAuthenticated: state.isAuthenticated,
         loginTime: state.loginTime,
       }),

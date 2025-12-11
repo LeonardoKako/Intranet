@@ -1,3 +1,4 @@
+// api/categoryService.ts
 import { api } from "./api";
 import type { CreateCategoryDto, UpdateCategoryDto } from "./dto/category.dto";
 

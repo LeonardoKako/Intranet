@@ -1,93 +1,190 @@
 import {
   CircleUserRoundIcon,
   FolderIcon,
-  HouseIcon,
+  HomeIcon,
   SquarePenIcon,
+  LogOutIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { categoryService } from "../api/categoryService";
-import type { Category, User } from "../types/types";
+import type { Category } from "../types/types";
 import { CATEGORY_ICON_MAP } from "../utils/categoryIconMap";
-import {
-  CATEGORY_COLOR_MAP,
-  SIDEBAR_COLOR_CLASSES,
-} from "../utils/categoryMapColor";
-import { usersService } from "../api/userService";
-import { NavLink } from "react-router";
+import { CATEGORY_COLOR_MAP } from "../utils/categoryMapColor";
+import { useAuthStore } from "../stores/AuthStore";
+import { NavLink, useNavigate } from "react-router";
 
 export function SideBar() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [user, setUser] = useState<User>();
+  const [loading, setLoading] = useState(true);
+  const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function loadAll() {
+    async function loadCategories() {
       try {
-        const [c] = await Promise.all([categoryService.getAll()]);
-        const [u] = await Promise.all([
-          usersService.getOne("32cf333c-a0bd-450a-a9c4-4ee1e106cce6"),
-        ]);
-        setCategories(c);
-        setUser(u);
-      } catch (err) {
-        console.error("Erro ao carregar dados:", err);
+        setLoading(true);
+        const categoriesData = await categoryService.getAll();
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error("Erro ao carregar categorias:", error);
+        // Se der erro 401 (não autorizado), o interceptor já redireciona
+      } finally {
+        setLoading(false);
       }
     }
 
-    loadAll();
+    loadCategories();
   }, []);
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const normalizeUrl = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "-");
+  };
+
   return (
-    <aside className='w-full max-w-64 lg:max-w-72 min-h-[89.8vh] bg-gray-100 p-6 flex flex-col text-black rounded'>
-      <div className='mt-4 flex items-center gap-4'>
-        <CircleUserRoundIcon size={56} />
-        <div className='flex flex-col items-start justify-end'>
-          <h2>{user?.nickname}</h2>
-          <div className='flex items-center justify-center gap-2 cursor-pointer hover:text-rose-600 transition'>
-            <NavLink to={"/settings"} className='text-sm'>
+    <aside className='w-full max-w-64 lg:max-w-72 min-h-[89.8vh] bg-gray-100 text-gray-800 p-6 flex flex-col rounded-lg shadow-xl border border-gray-300'>
+      {/* User Profile Section */}
+      <div className='flex items-center gap-4 p-4 bg-gray-50 rounded-lg mb-6 border border-gray-200'>
+        <div className='relative'>
+          <CircleUserRoundIcon size={56} className='text-blue-500' />
+          <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white'></div>
+        </div>
+        <div className='flex-1 min-w-0'>
+          <h2 className='font-bold text-lg truncate'>
+            {user?.nickname || "Usuário"}
+          </h2>
+          <p className='text-sm text-gray-600 truncate'>{user?.email}</p>
+          <div className='flex items-center gap-1 mt-1'>
+            <NavLink
+              to='/settings'
+              className='text-sm text-blue-500 hover:text-blue-700 transition flex items-center gap-1'
+            >
+              <SquarePenIcon size={12} />
               Editar Perfil
             </NavLink>
-            <SquarePenIcon size={14} className='mt-[2.5px]' />
           </div>
         </div>
       </div>
 
-      <div className='bg-gray-400 mx-auto w-[80%] h-0.5 my-6 rounded'></div>
+      {/* Divider */}
+      <div className='bg-gray-300 mx-auto w-full h-px my-4 rounded'></div>
 
-      <nav>
-        <ul className='flex flex-col gap-1'>
-          <NavLink
-            to={"/home"}
-            className='flex items-center gap-2 p-2 py-4 rounded hover:bg-gray-600 hover:text-gray-100 cursor-pointer transition'
-          >
-            <HouseIcon size={20} />
-            <p>Home</p>
-          </NavLink>
+      {/* Navigation */}
+      <nav className='flex-1'>
+        <h3 className='text-sm font-semibold text-gray-600 uppercase tracking-wider mb-3 px-2'>
+          Navegação
+        </h3>
 
-          {categories.map((category) => {
-            const Icon = CATEGORY_ICON_MAP[category.name] ?? FolderIcon;
+        <ul className='space-y-1'>
+          <li>
+            <NavLink
+              to='/home'
+              className={({ isActive }) =>
+                `flex items-center gap-3 p-3 rounded-lg transition-all ${
+                  isActive
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "hover:bg-gray-200 text-gray-700 hover:text-gray-900"
+                }`
+              }
+            >
+              <HomeIcon size={20} />
+              <span className='font-medium'>Home</span>
+            </NavLink>
+          </li>
 
-            // pega cor específica da categoria
-            const colorName = CATEGORY_COLOR_MAP[category.name] ?? "purple";
+          <li className='mt-6'>
+            <h3 className='text-sm font-semibold text-gray-600 uppercase tracking-wider mb-3 px-2'>
+              Categorias
+            </h3>
 
-            // pega classes de hover correspondentes
-            const colorClass = SIDEBAR_COLOR_CLASSES[colorName];
+            {loading ? (
+              <div className='space-y-2'>
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className='flex items-center gap-3 p-3 rounded-lg bg-gray-200 animate-pulse border border-gray-300'
+                  >
+                    <div className='w-5 h-5 bg-gray-300 rounded'></div>
+                    <div className='h-4 bg-gray-300 rounded w-24'></div>
+                  </div>
+                ))}
+              </div>
+            ) : categories.length > 0 ? (
+              <div className='space-y-1'>
+                {categories.map((category) => {
+                  const Icon = CATEGORY_ICON_MAP[category.name] || FolderIcon;
+                  const colorName = CATEGORY_COLOR_MAP[category.name] || "blue";
 
-            return (
-              <NavLink
-                to={`/${category.name
-                  .toLowerCase()
-                  .normalize("NFD")
-                  .replace(/[\u0300-\u036f]/g, "")}`}
-                key={category.id}
-                className={`flex items-center gap-2 p-2 py-4 rounded cursor-pointer transition ${colorClass}`}
-              >
-                <Icon size={20} />
-                <span>{category.name}</span>
-              </NavLink>
-            );
-          })}
+                  // Classes para tema claro
+                  const colorClassesLight: Record<string, string> = {
+                    blue: "hover:bg-blue-500 hover:text-white",
+                    green: "hover:bg-green-500 hover:text-white",
+                    purple: "hover:bg-purple-500 hover:text-white",
+                    orange: "hover:bg-orange-500 hover:text-white",
+                    red: "hover:bg-red-500 hover:text-white",
+                    teal: "hover:bg-teal-500 hover:text-white",
+                    rose: "hover:bg-rose-500 hover:text-white",
+                    yellow: "hover:bg-yellow-500 hover:text-white",
+                  };
+
+                  const colorClasses =
+                    colorClassesLight[colorName] ||
+                    "hover:bg-blue-500 hover:text-white";
+
+                  return (
+                    <NavLink
+                      to={`/category/${normalizeUrl(category.name)}`}
+                      key={category.id}
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 p-3 rounded-lg transition-all border border-gray-300 ${
+                          isActive
+                            ? `${colorClasses.replace(
+                                "hover:",
+                                ""
+                              )} text-white shadow-md border-transparent`
+                            : `text-gray-700 ${colorClasses} hover:border-transparent`
+                        }`
+                      }
+                    >
+                      <Icon size={20} />
+                      <span className='font-medium truncate'>
+                        {category.name}
+                      </span>
+                    </NavLink>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className='p-3 text-center text-gray-500 text-sm bg-gray-200 rounded-lg border border-gray-300'>
+                Nenhuma categoria encontrada
+              </div>
+            )}
+          </li>
         </ul>
       </nav>
+
+      {/* Logout Button */}
+      <div className='mt-auto pt-6 border-t border-gray-300'>
+        <button
+          onClick={handleLogout}
+          className='flex items-center justify-center gap-3 w-full p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-all shadow hover:shadow-lg'
+        >
+          <LogOutIcon size={20} />
+          <span>Sair</span>
+        </button>
+
+        <div className='mt-4 text-xs text-gray-500 text-center'>
+          Sistema Interno • Unicesusc TI
+        </div>
+      </div>
     </aside>
   );
 }
