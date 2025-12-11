@@ -59,10 +59,10 @@ export default function Logon() {
   };
 
   return (
-    <section className='w-screen min-h-screen bg-gradient-to-br from-gray-700 via-gray-600 to-gray-800 flex items-center justify-center p-4'>
+    <section className='w-screen min-h-screen bg-linear-to-br from-gray-700 via-gray-600 to-gray-800 flex items-center justify-center p-4'>
       <div className='w-full max-w-6xl flex flex-col md:flex-row bg-white/10 backdrop-blur-lg rounded-3xl overflow-hidden shadow-2xl border border-white/20'>
         {/* Left Side - Welcome Section */}
-        <div className='md:w-1/2 bg-gradient-to-br from-rose-400 to-rose-700 p-8 md:p-12 flex flex-col justify-center text-white'>
+        <div className='md:w-1/2 bg-linear-to-br from-rose-400 to-rose-700 p-8 md:p-12 flex flex-col justify-center text-white'>
           <div className='mb-8'>
             <h1 className='text-4xl md:text-5xl font-bold mb-12'>
               Unicesusc Intranet TI
@@ -147,7 +147,7 @@ export default function Logon() {
               <button
                 type='submit'
                 disabled={loading}
-                className='w-full bg-gradient-to-r from-rose-400 to-rose-700 text-white py-3 px-4 rounded-xl font-semibold 
+                className='w-full bg-linear-to-r from-rose-400 to-rose-700 text-white py-3 px-4 rounded-xl font-semibold 
                   hover:from-rose-500 hover:to-rose-800 transition-all duration-300 transform hover:-translate-y-0.5 
                   shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none cursor-pointer'
               >
