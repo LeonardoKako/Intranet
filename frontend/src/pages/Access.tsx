@@ -7,7 +7,7 @@ export default function Access() {
     <section className='w-screen min-h-screen bg-gray-400 overflow-hidden'>
       <Header />
       <SideBar />
-      <div className='max-w-[86vw] lg:max-w-[84vw] ml-[14.1vw] lg:ml-[16.1vw] mt-[10vh]'>
+      <div className='max-w-[86vw] lg:max-w-[84vw] ml-[14.1vw] lg:ml-[16.1vw] mt-[9.8vh] rounded'>
         <MainAccess />
       </div>
     </section>

@@ -72,7 +72,7 @@ export default function Settings() {
     <section className='w-screen min-h-screen bg-gray-400 overflow-hidden'>
       <Header />
       <SideBar />
-      <div className='max-w-[86vw] lg:max-w-[84vw] ml-[14.1vw] lg:ml-[16.1vw] mt-[10vh]'>
+      <div className='max-w-[86vw] lg:max-w-[84vw] ml-[14.1vw] lg:ml-[16.1vw] mt-[9.8vh] rounded'>
         <div className='flex-1'>
           {refreshing && (
             <div className='absolute top-20 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg animate-pulse'>

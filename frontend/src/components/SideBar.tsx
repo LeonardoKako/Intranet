@@ -74,7 +74,7 @@ export function SideBar() {
 
   return (
     <aside
-      className='fixed top-[10vh] w-full max-w-[14vw] lg:max-w-[16vw] h-[calc(100vh-10vh)] bg-gray-100 text-gray-800 p-6 
+      className='fixed top-[9.8vh] w-full max-w-[14vw] lg:max-w-[16vw] h-[calc(100vh-10vh)] bg-gray-100 text-gray-800 p-6 
     flex flex-col rounded-r-lg shadow-xl border-r border-gray-300 overflow-y-auto'
     >
       {/* User Profile Section */}

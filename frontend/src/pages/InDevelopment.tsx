@@ -9,7 +9,7 @@ export default function InDevelopment() {
     <section className='w-screen min-h-screen bg-gray-400 overflow-hidden'>
       <Header />
       <SideBar />
-      <div className='max-w-[86vw] lg:max-w-[84vw] ml-[14.1vw] lg:ml-[16.1vw] mt-[10vh]'>
+      <div className='max-w-[86vw] lg:max-w-[84vw] ml-[14.1vw] lg:ml-[16.1vw] mt-[9.8vh] rounded'>
         <div className='min-h-[90vh] flex flex-col items-center justify-center p-8 text-center bg-gray-100 '>
           <div className='relative'>
             <ConstructionIcon

@@ -1,14 +1,20 @@
 // components/Header.tsx
+import { useNavigate } from "react-router";
 import logo from "../assets/onlyLogo.png";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
-    <header className='fixed top-0 left-0 w-full min-h-[9.8vh] px-10 flex items-center rounded bg-gray-100'>
+    <header className='fixed top-0 left-0 w-full min-h-[9.8vh] px-10 flex items-center rounded bg-gray-100 border-b-gray-400 border-b-2'>
       <div className='flex items-center gap-3'>
-        <div className='w-16 h-12 bg-linear-to-r from-rose-400 to-rose-600 rounded-lg flex items-center justify-center px-2'>
+        <div
+          className='w-16 h-12 bg-linear-to-r from-rose-400 to-rose-600 rounded-lg flex items-center justify-center px-2 cursor-pointer'
+          onClick={() => navigate("/home")}
+        >
           <img src={logo} alt='logo unicesusc' />
         </div>
-        <h1 className='text-xl font-bold text-gray-800'>Intranet Unicesusc</h1>
+        <h1 className='text-xl font-bold text-gray-800'>Intranet UNICESUSC</h1>
         <span className='text-xs bg-rose-100 text-rose-700 px-2 py-1 rounded-full font-medium'>
           v1.0.0
         </span>
