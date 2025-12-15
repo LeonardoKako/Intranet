@@ -10,9 +10,10 @@ type Props = {
 export function Modal({ icon, title, form, functionState }: Props) {
   return (
     <>
-      <div className='absolute top-0 left-0 z-10 w-screen h-screen bg-black opacity-30'></div>
+      <div className='absolute top-0 left-0 z-10 w-screen h-screen bg-black opacity-30 animate-fadeIn'></div>
+      {/* Adicionado animate-fadeIn */}
       <main className='fixed inset-0 flex items-center justify-center z-20'>
-        <div className='w-[560px] h-[560px] bg-white rounded-3xl px-8 py-6'>
+        <div className='w-[560px] h-[560px] bg-white rounded-3xl px-8 py-6 animate-slideUp'>
           <header className='flex items-center gap-4'>
             {icon}
             <h1 className='text-3xl font-semibold'>{title}</h1>

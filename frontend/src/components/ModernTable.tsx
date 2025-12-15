@@ -84,7 +84,10 @@ export function ModernTable({ logins }: Props) {
 
           <tbody>
             {logins.map((item) => (
-              <tr key={item.id} className='bg-white border-b border-gray-300'>
+              <tr
+                key={item.id}
+                className='bg-white border-b border-gray-300 hover:bg-gray-50 transition-colors duration-150'
+              >
                 <td className='py-3 px-4 border-r border-gray-300'>
                   {truncate(item.title, 28)}
                 </td>
