@@ -1,5 +1,5 @@
 @baseurl = http://localhost:3000
-@idUser = 32cf333c-a0bd-450a-a9c4-4ee1e106cce6
+@idUser = ec6b9376-4798-48af-8c94-197868a94dd8
 
 ### Users findAll() 
 GET {{baseurl}}/users
@@ -26,7 +26,8 @@ Content-Type: application/json
     "fullName": "Leonardo João Fleith att", 
     "email": "fleithkako@gmail.com", 
     "nickname": "Leo", 
-    "password": "123456"  
+    "password": "Leo123",
+    "oldPassword": "senhaLeo" 
 }
 
 ### Users Remove(idUser) 

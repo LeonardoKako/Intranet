@@ -1,5 +1,5 @@
 // pages/Login.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { usersService } from "../api/userService";
 import isEmail from "validator/lib/isEmail";
@@ -25,31 +25,42 @@ export default function Login() {
     navigate("/home");
   }
 
+  useEffect(() => {
+    if (!isAuthenticated) toast.error("Usuário não autenticado");
+    else toast.success("Usuário autenticado com sucesso!", {});
+  }, [isAuthenticated]);
+
   const validateForm = () => {
-    const newErrors: { email?: string; password?: string } = {};
+    if (!isAuthenticated) {
+      const newErrors: { email?: string; password?: string } = {};
 
-    if (!email.trim()) {
-      newErrors.email = "Email é obrigatório";
-    } else if (!isEmail(email)) {
-      newErrors.email = "Por favor, insira um email válido";
+      if (!email.trim()) {
+        newErrors.email = "Email é obrigatório";
+      } else if (!isEmail(email)) {
+        newErrors.email = "Por favor, insira um email válido";
+      }
+
+      if (!password.trim()) {
+        newErrors.password = "Senha é obrigatória";
+      } else if (password.length < 6) {
+        newErrors.password = "Senha deve ter pelo menos 6 caracteres";
+      }
+
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
     }
 
-    if (!password.trim()) {
-      newErrors.password = "Senha é obrigatória";
-    } else if (password.length < 6) {
-      newErrors.password = "Senha deve ter pelo menos 6 caracteres";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      toast.error("Por favor, corrija os erros no formulário");
-      return;
+    if (!isAuthenticated) {
+      if (!validateForm()) {
+        toast.error("Por favor, corrija os erros no formulário");
+        return;
+      }
     }
 
     setLoading(true);
@@ -64,10 +75,6 @@ export default function Login() {
 
       // Salvar no store
       useAuthStore.getState().login(user, accessToken);
-
-      toast.success("Login realizado com sucesso! Redirecionando...", {
-        autoClose: 2000,
-      });
 
       // Pequeno delay para mostrar a mensagem de sucesso
       setTimeout(() => {
@@ -88,9 +95,11 @@ export default function Login() {
         errorMessage = "Sem conexão com a internet";
       }
 
-      toast.error(errorMessage, {
-        icon: <AlertCircleIcon className='text-red-500' />,
-      });
+      if (!isAuthenticated) {
+        toast.error(errorMessage, {
+          icon: <AlertCircleIcon className='text-red-500' />,
+        });
+      }
 
       // Animar os campos com erro
       setErrors({

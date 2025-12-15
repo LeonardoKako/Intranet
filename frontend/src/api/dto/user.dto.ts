@@ -10,7 +10,7 @@ export type UpdateUserDto = {
   nickname?: string;
   email?: string;
   oldPassword?: string; // Para verificar antes de alterar a senha
-  newPassword?: string; // Nova senha (opcional)
+  password?: string; // Nova senha (opcional)
 };
 
 export type LoginUserDto = {

@@ -103,7 +103,7 @@ export function MainProfile({
     // Adicionar dados de senha apenas se for alterar
     if (newPassword) {
       updateData.oldPassword = oldPassword;
-      updateData.newPassword = newPassword;
+      updateData.password = newPassword;
     }
 
     try {
