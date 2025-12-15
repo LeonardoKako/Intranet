@@ -299,7 +299,7 @@ export default function Login() {
                   direitos reservados.
                 </p>
                 <p className='text-center text-gray-400 text-xs mt-1'>
-                  Sistema desenvolvido pelo Departamento de TI
+                  Sistema desenvolvido por Leonardo João Fleith
                 </p>
               </div>
             </form>

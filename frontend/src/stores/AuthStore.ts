@@ -1,17 +1,7 @@
 // stores/AuthStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-export type User = {
-  id: string; // Agora é string (UUID)
-  email: string;
-  fullName: string;
-  nickname: string;
-  role?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  // NÃO inclua passwordHash aqui!
-};
+import type { User } from "../types/types";
 
 type AuthState = {
   user: User | null;
@@ -24,7 +14,7 @@ type AuthState = {
   checkSession: () => boolean;
 };
 
-const MINUTES = 30;
+const MINUTES = 5;
 const SESSION_TIMEOUT = MINUTES * 60 * 1000;
 
 export const useAuthStore = create<AuthState>()(
