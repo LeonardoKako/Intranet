@@ -47,8 +47,8 @@ POST {{baseurl}}/category
 Content-Type: application/json
 
  {
-    "name": "Documentação",
-    "description": "Documentos técnicos e manuais do sistema"
+    "name": "Acessos",
+    "description": "Gerenciamento de logins e senhas"
   }
 
 ### Category Patch(idCategory) 

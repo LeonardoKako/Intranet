@@ -1,54 +1,83 @@
+// App.tsx
 import { BrowserRouter, Route, Routes } from "react-router";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
 import Settings from "./pages/Settings";
-import Logon from "./pages/Logon";
+import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import InDevelopment from "./pages/InDevelopment";
+import Login from "./pages/Login";
+import Access from "./pages/Access";
+
+// Categorias disponíveis no sistema
+const CATEGORIES = [
+  "usuarios",
+  "servidores",
+  "cloud",
+  "rede",
+  "seguranca",
+  "documentacao",
+];
 
 export default function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Logon />} />
+    <BrowserRouter>
+      <Routes>
+        {/* Rota pública - Página de autenticação */}
+        <Route path='/' element={<Login />} />
 
-          <Route
-            path='/home'
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/category/login'
-            element={
-              <ProtectedRoute>
-                <Login />
-              </ProtectedRoute>
-            }
-          />
+        {/* Rotas protegidas com Layout */}
+        <Route
+          path='/home'
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
 
-          <Route
-            path='/settings'
-            element={
-              <ProtectedRoute>
-                <Settings />
-              </ProtectedRoute>
-            }
-          />
+        {/* Rota específica para Login (Lista de logins/senhas) */}
+        <Route
+          path='/category/acessos'
+          element={
+            <ProtectedRoute>
+              <Access />
+            </ProtectedRoute>
+          }
+        />
 
+        {/* Rota específica para Settings */}
+        <Route
+          path='/settings'
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Rotas dinâmicas para todas as categorias */}
+        {CATEGORIES.map((category) => (
           <Route
-            path='/*'
+            key={category}
+            path={`/category/${category}`}
             element={
               <ProtectedRoute>
-                <NotFound />
+                <InDevelopment />
               </ProtectedRoute>
             }
           />
-        </Routes>
-      </BrowserRouter>
-    </>
+        ))}
+
+        {/* Rota 404 personalizada */}
+        <Route
+          path='/*'
+          element={
+            <ProtectedRoute>
+              <NotFound />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }

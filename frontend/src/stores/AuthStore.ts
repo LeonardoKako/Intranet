@@ -24,7 +24,8 @@ type AuthState = {
   checkSession: () => boolean;
 };
 
-const SESSION_TIMEOUT = 5 * 60 * 1000; // 5 minutos
+const MINUTES = 30;
+const SESSION_TIMEOUT = MINUTES * 60 * 1000;
 
 export const useAuthStore = create<AuthState>()(
   persist(

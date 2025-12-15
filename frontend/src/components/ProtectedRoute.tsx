@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router";
 import { useAuthStore } from "../stores/AuthStore";
+import { Loader2Icon } from "lucide-react";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -13,7 +14,14 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { isAuthenticated, checkSession, logout } = useAuthStore();
 
   useEffect(() => {
-    const checkAuth = () => {
+    const checkAuth = async () => {
+      // Se estiver na página de login e já estiver autenticado, redireciona para home
+      if (location.pathname === "/" && isAuthenticated) {
+        setIsChecking(false);
+        return;
+      }
+
+      // Se não estiver autenticado, verifica sessão
       if (!isAuthenticated) {
         setIsChecking(false);
         return;
@@ -33,21 +41,30 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     checkAuth();
 
     // Configurar um intervalo para verificar a sessão periodicamente
-    const intervalId = setInterval(checkAuth, 30000); // Verifica a cada 30 segundos
+    const intervalId = setInterval(checkAuth, 30000);
 
     return () => clearInterval(intervalId);
   }, [isAuthenticated, checkSession, logout, location]);
 
   if (isChecking) {
     return (
-      <div className='flex items-center justify-center min-h-screen'>
-        <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500'></div>
+      <div className='flex items-center justify-center min-h-screen bg-linear-to-br from-gray-700 via-gray-600 to-gray-800'>
+        <div className='text-center'>
+          <Loader2Icon className='w-12 h-12 text-white animate-spin mx-auto mb-4' />
+          <p className='text-white text-lg'>Verificando autenticação...</p>
+          <p className='text-gray-400 text-sm mt-2'>Por favor, aguarde</p>
+        </div>
       </div>
     );
   }
 
-  if (!isAuthenticated) {
-    // Redirecionar para login, mantendo a URL original
+  // Se tentar acessar login estando autenticado, redireciona para home
+  if (location.pathname === "/" && isAuthenticated) {
+    return <Navigate to='/home' replace />;
+  }
+
+  // Se não estiver autenticado e não estiver na página de login, redireciona
+  if (!isAuthenticated && location.pathname !== "/") {
     return <Navigate to='/' state={{ from: location }} replace />;
   }
 

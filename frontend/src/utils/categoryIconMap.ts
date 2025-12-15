@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 export const CATEGORY_ICON_MAP: Record<string, React.ElementType> = {
-  Login: KeyRoundIcon,
+  Acessos: KeyRoundIcon,
   Usuários: ShieldUserIcon,
   Servidores: ServerIcon,
   Cloud: CloudIcon,

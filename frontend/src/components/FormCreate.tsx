@@ -25,13 +25,13 @@ export function FormCreate({ functionState }: Props) {
         const categories = await categoryService.getAll();
 
         const found = categories.find(
-          (c: Category) => c.name.toLowerCase() === "login".toLowerCase()
+          (c: Category) => c.name.toLowerCase() === "acessos".toLowerCase()
         );
 
         if (found) {
           setCategoryId(found.id);
         } else {
-          console.warn("Categoria 'Login' não encontrada");
+          console.warn("Categoria 'Acessos' não encontrada");
         }
       } catch (err) {
         console.error("Erro ao carregar dados:", err);

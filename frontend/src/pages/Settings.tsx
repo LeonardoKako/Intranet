@@ -69,10 +69,10 @@ export default function Settings() {
   }
 
   return (
-    <section className='w-screen min-h-screen bg-gray-400'>
+    <section className='w-screen min-h-screen bg-gray-400 overflow-hidden'>
       <Header />
-      <div className='mt-[0.2vh] flex gap-[0.2vh]'>
-        <SideBar />
+      <SideBar />
+      <div className='max-w-[86vw] lg:max-w-[84vw] ml-[14.1vw] lg:ml-[16.1vw] mt-[10vh]'>
         <div className='flex-1'>
           {refreshing && (
             <div className='absolute top-20 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg animate-pulse'>

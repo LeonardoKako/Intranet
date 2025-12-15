@@ -10,7 +10,7 @@ export type CategoryColor =
 
 export const CATEGORY_COLOR_MAP: Record<string, CategoryColor> = {
   // nome da categoria vindo do banco → cor fixa
-  Login: "blue",
+  Acessos: "blue",
   Usuários: "purple",
   Servidores: "green",
   Cloud: "orange",
