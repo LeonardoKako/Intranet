@@ -38,7 +38,9 @@ export class CategoryService {
   }
 
   async findAll() {
-    return await this.categoryRepository.find();
+    return await this.categoryRepository.find({
+      order: { name: 'ASC' },
+    });
   }
 
   async findOne(id: string) {
