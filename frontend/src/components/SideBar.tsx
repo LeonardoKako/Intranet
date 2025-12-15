@@ -27,7 +27,6 @@ export function SideBar() {
         setCategories(categoriesData);
       } catch (error) {
         console.error("Erro ao carregar categorias:", error);
-        // Se der erro 401 (não autorizado), o interceptor já redireciona
       } finally {
         setLoading(false);
       }
@@ -47,6 +46,30 @@ export function SideBar() {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/\s+/g, "-");
+  };
+
+  // Mapa de classes para cores ativas com melhor contraste
+  const activeColorClasses: Record<string, string> = {
+    blue: "bg-blue-500 text-white",
+    green: "bg-green-500 text-white",
+    purple: "bg-purple-500 text-white",
+    orange: "bg-orange-500 text-white",
+    red: "bg-red-500 text-white",
+    teal: "bg-teal-500 text-white",
+    rose: "bg-rose-500 text-white",
+    yellow: "bg-yellow-500 text-gray-900", // Alterado: texto escuro para melhor contraste
+  };
+
+  // Mapa de classes para hover (inativas)
+  const hoverColorClasses: Record<string, string> = {
+    blue: "hover:bg-blue-500 hover:text-white",
+    green: "hover:bg-green-500 hover:text-white",
+    purple: "hover:bg-purple-500 hover:text-white",
+    orange: "hover:bg-orange-500 hover:text-white",
+    red: "hover:bg-red-500 hover:text-white",
+    teal: "hover:bg-teal-500 hover:text-white",
+    rose: "hover:bg-rose-500 hover:text-white",
+    yellow: "hover:bg-yellow-500 hover:text-gray-900", // Alterado: texto escuro no hover também
   };
 
   return (
@@ -126,22 +149,6 @@ export function SideBar() {
                   const Icon = CATEGORY_ICON_MAP[category.name] || FolderIcon;
                   const colorName = CATEGORY_COLOR_MAP[category.name] || "blue";
 
-                  // Classes para tema claro
-                  const colorClassesLight: Record<string, string> = {
-                    blue: "hover:bg-blue-500 hover:text-white",
-                    green: "hover:bg-green-500 hover:text-white",
-                    purple: "hover:bg-purple-500 hover:text-white",
-                    orange: "hover:bg-orange-500 hover:text-white",
-                    red: "hover:bg-red-500 hover:text-white",
-                    teal: "hover:bg-teal-500 hover:text-white",
-                    rose: "hover:bg-rose-500 hover:text-white",
-                    yellow: "hover:bg-yellow-500 hover:text-white",
-                  };
-
-                  const colorClasses =
-                    colorClassesLight[colorName] ||
-                    "hover:bg-blue-500 hover:text-white";
-
                   return (
                     <NavLink
                       to={`/category/${normalizeUrl(category.name)}`}
@@ -149,11 +156,14 @@ export function SideBar() {
                       className={({ isActive }) =>
                         `flex items-center gap-3 p-3 rounded-lg transition-all border border-gray-300 ${
                           isActive
-                            ? `${colorClasses.replace(
-                                "hover:",
-                                ""
-                              )} text-white shadow-md border-transparent`
-                            : `text-gray-700 ${colorClasses} hover:border-transparent`
+                            ? `${
+                                activeColorClasses[colorName] ||
+                                "bg-blue-500 text-white"
+                              } shadow-md border-transparent`
+                            : `text-gray-700 ${
+                                hoverColorClasses[colorName] ||
+                                "hover:bg-blue-500 hover:text-white"
+                              } hover:border-transparent`
                         }`
                       }
                     >
@@ -178,7 +188,8 @@ export function SideBar() {
       <div className='mt-auto pt-6 border-t border-gray-300'>
         <button
           onClick={handleLogout}
-          className='flex items-center justify-center gap-3 w-full p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-all shadow hover:shadow-lg'
+          className='flex items-center justify-center gap-3 w-full p-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium 
+          cursor-pointer transition-all shadow hover:shadow-lg'
         >
           <LogOutIcon size={20} />
           <span>Sair</span>

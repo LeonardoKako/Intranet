@@ -1,9 +1,13 @@
 // components/Header.tsx
+import logo from "../assets/onlyLogo.png";
+
 export default function Header() {
   return (
     <header className='fixed top-0 left-0 w-full min-h-[9.8vh] px-10 flex items-center rounded bg-gray-100'>
       <div className='flex items-center gap-3'>
-        <div className='w-8 h-8 bg-linear-to-r from-rose-400 to-rose-600 rounded-lg'></div>
+        <div className='w-16 h-12 bg-linear-to-r from-rose-400 to-rose-600 rounded-lg flex items-center justify-center px-2'>
+          <img src={logo} alt='logo unicesusc' />
+        </div>
         <h1 className='text-xl font-bold text-gray-800'>Intranet Unicesusc</h1>
         <span className='text-xs bg-rose-100 text-rose-700 px-2 py-1 rounded-full font-medium'>
           v1.0.0

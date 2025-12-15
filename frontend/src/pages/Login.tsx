@@ -6,6 +6,7 @@ import isEmail from "validator/lib/isEmail";
 import { toast } from "react-toastify";
 import { useAuthStore } from "../stores/AuthStore";
 import { EyeIcon, EyeOffIcon, AlertCircleIcon } from "lucide-react";
+import unicesusc from "../assets/logoUnicesusc.png";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -112,9 +113,9 @@ export default function Login() {
 
           <div className='relative z-10'>
             <div className='mb-8'>
-              <h1 className='text-4xl md:text-5xl font-bold mb-12 animate-slide-up'>
-                Unicesusc Intranet TI
-              </h1>
+              <div className='mb-20'>
+                <img src={unicesusc} alt='logo unicesusc' />
+              </div>
               <p className='text-xl opacity-90 mb-4'>
                 Bem-vindo ao intranet Unicesusc
               </p>
