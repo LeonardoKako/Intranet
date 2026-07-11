@@ -9,7 +9,7 @@ export class AppService implements OnModuleInit {
     private readonly usersService: UsersService,
     private readonly categoryService: CategoryService,
     private readonly loginsService: LoginsService,
-  ) {}
+  ) { }
 
   getHello(): string {
     return 'Hello World!';
@@ -61,7 +61,7 @@ export class AppService implements OnModuleInit {
       const existingLogins = await this.loginsService.findAll();
       if (existingLogins.length === 0) {
         console.log('Nenhum login encontrado. Iniciando seeding de logins...');
-        
+
         // Buscar todas as categorias criadas para obter seus IDs reais
         const categories = await this.categoryService.findAll();
         const categoryMap = new Map(categories.map((c) => [c.name, c.id]));
@@ -70,35 +70,35 @@ export class AppService implements OnModuleInit {
           {
             title: 'Gmail do atendimento.ti',
             username: 'atendimento.ti@unicesusc.edu.br',
-            password: 'Cpd69@dmin',
+            password: 'senha',
             url: 'www.gmail.com',
             categoryName: 'Acessos',
           },
           {
             title: 'AWS Cloud Console',
             username: 'admin@unicesusc.edu.br',
-            password: 'Aws99@dmin',
+            password: 'senha',
             url: 'aws.amazon.com',
             categoryName: 'Cloud',
           },
           {
             title: 'Controlador de Domínio AD',
             username: 'administrator',
-            password: 'Ad69@dmin',
+            password: 'senha',
             url: '192.168.1.10',
             categoryName: 'Servidores',
           },
           {
             title: 'Switch Core HP',
             username: 'admin',
-            password: 'Switch69@dmin',
+            password: 'senha',
             url: '192.168.1.1',
             categoryName: 'Rede',
           },
           {
             title: 'Firewall pfSense',
             username: 'admin',
-            password: 'Pfsense99@dmin',
+            password: 'senha',
             url: '192.168.1.254',
             categoryName: 'Segurança',
           },
